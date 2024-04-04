@@ -1,3 +1,8 @@
+variable "vpc_id" {
+  description = "VPC"
+  type        = string
+}
+
 variable "public_subnet_1_id" {
   description = "AZ1 Public Subnet"
   type        = string

@@ -233,3 +233,16 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_private" {
     Name = "tf_allow_inbound_ssh_private"
   }
 }
+
+## =========================================================================
+## EC2 Instance Connect Endpoint (Optional)
+## =========================================================================
+# AZ1 Private Subnet For App, Public Security Group
+resource "aws_ec2_instance_connect_endpoint" "tf_test_eice" {
+  subnet_id          = aws_subnet.tf_test_private_subnet_1_app.id
+  security_group_ids = [aws_security_group.tf_test_public_sg.id]
+
+  tags = {
+    Name = "tf_test_eice"
+  }
+}

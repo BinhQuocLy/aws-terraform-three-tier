@@ -1,3 +1,8 @@
+output "vpc_id" {
+  description = "VPC"
+  value       = aws_vpc.tf_test_vpc.id
+}
+
 output "public_subnet_1_id" {
   description = "AZ1 Public Subnet"
   value       = aws_subnet.tf_test_public_subnet_1.id

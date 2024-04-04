@@ -7,6 +7,7 @@ resource "aws_instance" "tf_test_public_instance_1" {
   instance_type          = "t2.nano"
   subnet_id              = var.public_subnet_1_id
   vpc_security_group_ids = [var.public_sg_id]
+  user_data              = file("${path.module}/user_data.sh")
 
   tags = {
     Name = "tf_test_public_instance_1"
@@ -31,6 +32,7 @@ resource "aws_instance" "tf_test_public_instance_2" {
   instance_type          = "t2.nano"
   subnet_id              = var.public_subnet_2_id
   vpc_security_group_ids = [var.public_sg_id]
+  user_data              = file("${path.module}/user_data.sh")
 
   tags = {
     Name = "tf_test_public_instance_2"
@@ -46,5 +48,53 @@ resource "aws_instance" "tf_test_private_instance_2" {
 
   tags = {
     Name = "tf_test_private_instance_2"
+  }
+}
+
+## =========================================================================
+## Target Group
+## =========================================================================
+# Public Target Group
+resource "aws_lb_target_group" "tf_test_public_tg" {
+  name     = "tf-test-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
+}
+
+resource "aws_lb_target_group_attachment" "tf_test_tg_public_attac" {
+  count            = 2
+  target_group_arn = aws_lb_target_group.tf_test_public_tg.arn
+  target_id = element([
+    aws_instance.tf_test_public_instance_1.id,
+    aws_instance.tf_test_public_instance_2.id,
+  ], count.index)
+  port = 80
+}
+
+## =========================================================================
+## Application Load Balancer (ALB)
+## =========================================================================
+# Public Load Balancer
+resource "aws_lb" "tf_test_alb" {
+  name               = "tf-test-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [var.public_sg_id]
+  subnets            = [var.public_subnet_1_id, var.public_subnet_2_id]
+
+  tags = {
+    Environment = "production"
+  }
+}
+
+resource "aws_lb_listener" "tf_test_alb_public_listener" {
+  load_balancer_arn = aws_lb.tf_test_alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tf_test_public_tg.arn
   }
 }
