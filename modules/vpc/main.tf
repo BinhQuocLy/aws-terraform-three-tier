@@ -12,15 +12,15 @@ resource "aws_vpc" "tf_test_vpc" {
 ## ==================================================================
 ## Subnets
 ## ==================================================================
-# AZ1 Public Subnet
-resource "aws_subnet" "tf_test_public_subnet_1" {
+# AZ1 Public Subnet For Web
+resource "aws_subnet" "tf_test_public_subnet_1_web" {
   vpc_id                  = aws_vpc.tf_test_vpc.id
   availability_zone       = "ap-southeast-1a"
   cidr_block              = "10.0.0.0/24"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "tf_test_public_subnet_1"
+    Name = "tf_test_public_subnet_1_web"
   }
 }
 
@@ -46,15 +46,15 @@ resource "aws_subnet" "tf_test_private_subnet_1_db" {
   }
 }
 
-# AZ2 Public Subnet
-resource "aws_subnet" "tf_test_public_subnet_2" {
+# AZ2 Public Subnet For Web
+resource "aws_subnet" "tf_test_public_subnet_2_web" {
   vpc_id                  = aws_vpc.tf_test_vpc.id
   availability_zone       = "ap-southeast-1b"
   cidr_block              = "10.0.3.0/24"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "tf_test_public_subnet_2"
+    Name = "tf_test_public_subnet_2_web"
   }
 }
 
@@ -131,8 +131,8 @@ resource "aws_route_table" "tf_test_private_rt" {
 resource "aws_route_table_association" "tf_test_public_rt_assoc1" {
   count = 2
   subnet_id = element([
-    aws_subnet.tf_test_public_subnet_1.id,
-    aws_subnet.tf_test_public_subnet_2.id,
+    aws_subnet.tf_test_public_subnet_1_web.id,
+    aws_subnet.tf_test_public_subnet_2_web.id,
   ], count.index)
   route_table_id = aws_route_table.tf_test_public_rt.id
 }

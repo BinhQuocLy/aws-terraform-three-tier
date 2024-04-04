@@ -3,9 +3,9 @@ output "vpc_id" {
   value       = aws_vpc.tf_test_vpc.id
 }
 
-output "public_subnet_1_id" {
-  description = "AZ1 Public Subnet"
-  value       = aws_subnet.tf_test_public_subnet_1.id
+output "public_subnet_1_web_id" {
+  description = "AZ1 Public Subnet For Web"
+  value       = aws_subnet.tf_test_public_subnet_1_web.id
 }
 
 output "private_subnet_1_app_id" {
@@ -13,9 +13,9 @@ output "private_subnet_1_app_id" {
   value       = aws_subnet.tf_test_private_subnet_1_app.id
 }
 
-output "public_subnet_2_id" {
-  description = "AZ2 Public Subnet"
-  value       = aws_subnet.tf_test_public_subnet_2.id
+output "public_subnet_2_web_id" {
+  description = "AZ2 Public Subnet For Web"
+  value       = aws_subnet.tf_test_public_subnet_2_web.id
 }
 
 output "private_subnet_2_app_id" {
