@@ -152,7 +152,7 @@ resource "aws_route_table_association" "tf_test_private_rt_assoc1" {
 ## ==================================================================
 ## Security Groups
 ## ==================================================================
-# Public Security Group (Inbound:22,80,443; Outbound:"ALL")
+# Public Security Group (Inbound:22,80,443; Outbound:"ALL") ---------
 resource "aws_security_group" "tf_test_public_sg" {
   name   = "tf_test_public_sg"
   vpc_id = aws_vpc.tf_test_vpc.id
@@ -162,7 +162,7 @@ resource "aws_security_group" "tf_test_public_sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_public" {
+resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_1" {
   description       = "SSH"
   security_group_id = aws_security_group.tf_test_public_sg.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -171,11 +171,11 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_public" {
   to_port           = 22
 
   tags = {
-    Name = "tf_allow_inbound_ssh"
+    Name = "tf_allow_inbound_ssh_1"
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_http" {
+resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_http_1" {
   description       = "HTTPS"
   security_group_id = aws_security_group.tf_test_public_sg.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -184,11 +184,11 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_http" {
   to_port           = 80
 
   tags = {
-    Name = "tf_allow_inbound_http"
+    Name = "tf_allow_inbound_http_1"
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_https" {
+resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_https_1" {
   description       = "HTTPS"
   security_group_id = aws_security_group.tf_test_public_sg.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -197,7 +197,7 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_https" {
   to_port           = 443
 
   tags = {
-    Name = "tf_allow_inbound_https"
+    Name = "tf_allow_inbound_https_1"
   }
 }
 
@@ -211,7 +211,7 @@ resource "aws_vpc_security_group_egress_rule" "tf_allow_outbound_all" {
   }
 }
 
-# Private Security Group (Inbound:22; Outbound:"NO")
+# Private Security Group (Inbound:22,80,443; Outbound:"NO") ---------
 resource "aws_security_group" "tf_test_private_sg" {
   name   = "tf_test_private_sg"
   vpc_id = aws_vpc.tf_test_vpc.id
@@ -221,7 +221,7 @@ resource "aws_security_group" "tf_test_private_sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_private" {
+resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_2" {
   description       = "SSH"
   security_group_id = aws_security_group.tf_test_private_sg.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -230,7 +230,33 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_private" {
   to_port           = 22
 
   tags = {
-    Name = "tf_allow_inbound_ssh_private"
+    Name = "tf_allow_inbound_ssh_2"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_http_2" {
+  description       = "HTTPS"
+  security_group_id = aws_security_group.tf_test_private_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
+
+  tags = {
+    Name = "tf_allow_inbound_http_2"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_https_2" {
+  description       = "HTTPS"
+  security_group_id = aws_security_group.tf_test_private_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  ip_protocol       = "tcp"
+  to_port           = 443
+
+  tags = {
+    Name = "tf_allow_inbound_https_2"
   }
 }
 
@@ -238,11 +264,11 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_ssh_private" {
 ## EC2 Instance Connect Endpoint (Optional - Slow provisioning!)
 ## =========================================================================
 # AZ1 Private Subnet For App, Public Security Group
-# resource "aws_ec2_instance_connect_endpoint" "tf_test_eice" {
-#   subnet_id          = aws_subnet.tf_test_private_subnet_1_app.id
-#   security_group_ids = [aws_security_group.tf_test_public_sg.id]
+resource "aws_ec2_instance_connect_endpoint" "tf_test_eice" {
+  subnet_id          = aws_subnet.tf_test_private_subnet_1_app.id
+  security_group_ids = [aws_security_group.tf_test_public_sg.id]
 
-#   tags = {
-#     Name = "tf_test_eice"
-#   }
-# }
+  tags = {
+    Name = "tf_test_eice"
+  }
+}
