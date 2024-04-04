@@ -3,12 +3,4 @@
 !.gitignore
 
 !modules
-
-!modules/ec2
-!modules/ec2/*
-
-!modules/rds
-!modules/rds/*
-
-!modules/vpc
-!modules/vpc/*
+!modules/**
