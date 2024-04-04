@@ -4,3 +4,7 @@
 
 !modules
 !modules/**
+
+!main.tf
+!outputs.tf
+!vars.tf
