@@ -12,7 +12,7 @@ resource "aws_vpc" "tf_test_vpc" {
 ## ==================================================================
 ## Subnets
 ## ==================================================================
-# Public Subnet 1 (Availability Zone 1)
+# AZ1 Public Subnet
 resource "aws_subnet" "tf_test_public_subnet_1" {
   vpc_id                  = aws_vpc.tf_test_vpc.id
   availability_zone       = "ap-southeast-1a"
@@ -24,29 +24,29 @@ resource "aws_subnet" "tf_test_public_subnet_1" {
   }
 }
 
-# Private Subnet 1 For App (Availability Zone 1)
+# AZ1 Private Subnet For App
 resource "aws_subnet" "tf_test_private_subnet_1_app" {
-  vpc_id                  = aws_vpc.tf_test_vpc.id
-  availability_zone       = "ap-southeast-1a"
-  cidr_block              = "10.0.1.0/24"
+  vpc_id            = aws_vpc.tf_test_vpc.id
+  availability_zone = "ap-southeast-1a"
+  cidr_block        = "10.0.1.0/24"
 
   tags = {
     Name = "tf_test_private_subnet_1_app"
   }
 }
 
-# Private Subnet 1 For DB (Availability Zone 1)
+# AZ1 Private Subnet For DB
 resource "aws_subnet" "tf_test_private_subnet_1_db" {
-  vpc_id                  = aws_vpc.tf_test_vpc.id
-  availability_zone       = "ap-southeast-1a"
-  cidr_block              = "10.0.2.0/24"
+  vpc_id            = aws_vpc.tf_test_vpc.id
+  availability_zone = "ap-southeast-1a"
+  cidr_block        = "10.0.2.0/24"
 
   tags = {
     Name = "tf_test_private_subnet_1_db"
   }
 }
 
-# Public Subnet 2 (Availability Zone 2)
+# AZ2 Public Subnet
 resource "aws_subnet" "tf_test_public_subnet_2" {
   vpc_id                  = aws_vpc.tf_test_vpc.id
   availability_zone       = "ap-southeast-1b"
@@ -58,22 +58,22 @@ resource "aws_subnet" "tf_test_public_subnet_2" {
   }
 }
 
-# Private Subnet 2 For App (Availability Zone 2)
+# AZ2 Private Subnet For App
 resource "aws_subnet" "tf_test_private_subnet_2_app" {
-  vpc_id                  = aws_vpc.tf_test_vpc.id
-  availability_zone       = "ap-southeast-1b"
-  cidr_block              = "10.0.4.0/24"
+  vpc_id            = aws_vpc.tf_test_vpc.id
+  availability_zone = "ap-southeast-1b"
+  cidr_block        = "10.0.4.0/24"
 
   tags = {
     Name = "tf_test_private_subnet_2_app"
   }
 }
 
-# Private Subnet 2 For DB (Availability Zone 2)
+# AZ2 Private Subnet For DB
 resource "aws_subnet" "tf_test_private_subnet_2_db" {
-  vpc_id                  = aws_vpc.tf_test_vpc.id
-  availability_zone       = "ap-southeast-1b"
-  cidr_block              = "10.0.5.0/24"
+  vpc_id            = aws_vpc.tf_test_vpc.id
+  availability_zone = "ap-southeast-1b"
+  cidr_block        = "10.0.5.0/24"
 
   tags = {
     Name = "tf_test_private_subnet_2_db"
