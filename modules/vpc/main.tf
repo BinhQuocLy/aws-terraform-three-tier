@@ -92,6 +92,31 @@ resource "aws_internet_gateway" "tf_test_igw" {
 }
 
 ## ==================================================================
+## Elastic IP
+## ==================================================================
+resource "aws_eip" "tf_test_eip" {
+  domain     = "vpc"
+  depends_on = [aws_internet_gateway.tf_test_igw]
+
+  tags = {
+    Name = "tf_test_eip"
+  }
+}
+
+## ==================================================================
+## NAT Gateway
+## ==================================================================
+resource "aws_nat_gateway" "tf_test_ngw" {
+  allocation_id = aws_eip.tf_test_eip.id
+  subnet_id     = aws_subnet.tf_test_public_subnet_1_web.id
+  depends_on    = [aws_internet_gateway.tf_test_igw]
+
+  tags = {
+    Name = "tf_test_ngw"
+  }
+}
+
+## ==================================================================
 ## Route Tables
 ## ==================================================================
 # Public Route Table
@@ -120,6 +145,11 @@ resource "aws_route_table" "tf_test_private_rt" {
   route {
     cidr_block = "10.0.0.0/16"
     gateway_id = "local"
+  }
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.tf_test_ngw.id
   }
 
   tags = {
@@ -201,13 +231,13 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_https_1" {
   }
 }
 
-resource "aws_vpc_security_group_egress_rule" "tf_allow_outbound_all" {
+resource "aws_vpc_security_group_egress_rule" "tf_allow_outbound_all_1" {
   security_group_id = aws_security_group.tf_test_public_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1"
 
   tags = {
-    Name = "tf_allow_outbound_all"
+    Name = "tf_allow_outbound_all_1"
   }
 }
 
@@ -257,6 +287,16 @@ resource "aws_vpc_security_group_ingress_rule" "tf_allow_inbound_https_2" {
 
   tags = {
     Name = "tf_allow_inbound_https_2"
+  }
+}
+
+resource "aws_vpc_security_group_egress_rule" "tf_allow_outbound_all_2" {
+  security_group_id = aws_security_group.tf_test_private_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
+
+  tags = {
+    Name = "tf_allow_outbound_all_2"
   }
 }
 

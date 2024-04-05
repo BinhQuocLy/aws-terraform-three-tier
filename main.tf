@@ -11,5 +11,4 @@ module "ec2" {
   private_subnet_2_app_id = module.vpc.private_subnet_2_app_id
   public_sg_id            = module.vpc.public_sg_id
   private_sg_id           = module.vpc.private_sg_id
-  depends_on              = [module.vpc]
 }
