@@ -16,11 +16,21 @@ cat <<EOF >> /var/www/html/index.html
   <title>Document</title>
 </head>
 <body>
-  <h1>Web IP (This page): $(hostname -I)</h1>
-  <h1 id="app">App IP: </h1>
+  <h2>Web IP (This page): $(hostname -I)</h2>
+  <h2 id="app">App IP: </h2>
   <script>
     const appContent = document.getElementById("app");
-    appContent.innerText += "$(hostname -I)";
+    fetch("http://internal-tf-test-alb-app-1439849174.ap-southeast-1.elb.amazonaws.com", {
+      redirect: 'follow',
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        appContent.innerText += data.ip;
+      });
   </script>
 </body>
 </html>
