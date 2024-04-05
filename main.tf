@@ -16,7 +16,7 @@ module "ec2" {
 module "route53" {
   source      = "./modules/route53"
   vpc_id      = module.vpc.vpc_id
-  root_dns    = "test.com"
-  app_dns     = "app.test.com"
+  root_dns    = var.root_dns
+  app_dns     = var.app_dns
   app_alb_dns = module.ec2.app_alb_dns
 }

@@ -5,6 +5,6 @@
 !modules
 !modules/**
 
+!inputs.tf
 !main.tf
 !outputs.tf
-!vars.tf
