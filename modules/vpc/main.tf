@@ -303,7 +303,9 @@ resource "aws_vpc_security_group_egress_rule" "tf_allow_outbound_all_2" {
 }
 
 ## =========================================================================
-## EC2 Instance Connect Endpoint (Optional - Slow provisioning!)
+## EC2 Instance Connect Endpoint
+## (Optional, for the need of checking the private-subnet instances)
+## (Slow provisioning, often around 5m30s for creating)
 ## =========================================================================
 # AZ1 Private Subnet For App, Public Security Group
 # resource "aws_ec2_instance_connect_endpoint" "tf_test_eice" {
