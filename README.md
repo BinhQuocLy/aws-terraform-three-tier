@@ -4,6 +4,8 @@
 
 ## Definition of Done
 
+![diagram2](docs/diagram2.png)
+
 ## Run
 
 ### 1. Credentials
