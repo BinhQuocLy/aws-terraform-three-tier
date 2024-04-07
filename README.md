@@ -1,4 +1,4 @@
-# AWS-Terraform Use Case 1
+# AWS-Terraform Use Case 2
 
 ![diagram2](docs/diagram2.png)
 
