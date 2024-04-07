@@ -1,4 +1,4 @@
-# AWS-Terraform of 3-Tier Architecture with High Availability
+# AWS-Terraform Infrastructure for 3-Tier Architecture with High Availability
 
 An three-tier architecture, infrastructure by AWS and provisioned with Terraform. Ensuring high availability.
 
