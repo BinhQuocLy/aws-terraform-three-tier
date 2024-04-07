@@ -4,7 +4,7 @@
 
 ## Definition of Done
 
-![diagram2](docs/diagram2.png)
+![demo](docs/demo.png)
 
 ## Run
 
