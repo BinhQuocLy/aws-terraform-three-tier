@@ -4,6 +4,8 @@
 
 ## Definition of Done
 
+The returned results will be almost continuously different, alternating between IPs for each web tier and app tier.
+
 ![demo](docs/demo.png)
 
 ## Run
