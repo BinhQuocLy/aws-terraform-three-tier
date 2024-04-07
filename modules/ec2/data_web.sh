@@ -24,10 +24,10 @@ const app = express();
 const port = 80;
 
 app.get('/', async (req, res) => {
-  const res = await axios.get('http://app.test.com');
+  const app_res = await axios.get('http://app.test.com');
   res.json({ 
     web_private_ip: "$(hostname -I)".trim(), 
-    app_private_ip: res.data.ip 
+    app_private_ip: app_res.data.ip 
   });
 });
 
