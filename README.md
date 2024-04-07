@@ -4,8 +4,6 @@
 
 ## Definition of Done
 
-
-
 ## Run
 
 ### 1. Credentials
@@ -32,12 +30,4 @@ terraform apply
 
 ```hcl
 terraform destroy
-```
-
-## Access the instances via SSH
-
-```bash
-terraform output -raw private_key > tf_test_key_pair.pem
-chmod 400 "tf_test_key_pair.pem"
-ssh -i "tf_test_key_pair.pem" ec2-user@<PublicIP>
 ```
