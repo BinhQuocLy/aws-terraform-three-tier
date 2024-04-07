@@ -1,4 +1,4 @@
-# AWS-Terraform Use Case 2
+# AWS-Terraform Three Tier with High Availability
 
 A highly available three-tier architecture with AWS.
 
