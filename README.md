@@ -1,6 +1,6 @@
 # AWS-Terraform Three Tier with High Availability
 
-A native AWS three-tier architecture with high availability and provisioned by Terraform.
+An AWS highly available three-tier architecture, provisioned with Terraform.
 
 ![diagram2](docs/diagram2.png)
 
