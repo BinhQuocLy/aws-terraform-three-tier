@@ -1,7 +1,9 @@
-output "web_alb_dns" {
-  value = module.ec2.web_alb_dns
+output "public_web_dns" {
+  value       = module.ec2.web_alb_dns
+  description = "Public web DNS"
 }
 
-output "app_alb_dns" {
-  value = module.ec2.app_alb_dns
+output "private_app_dns" {
+  value       = var.app_dns
+  description = "Private app DNS"
 }

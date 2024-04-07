@@ -5,6 +5,10 @@
 !modules
 !modules/**
 
+!inputs.tf
 !main.tf
 !outputs.tf
-!vars.tf
+
+!docs
+!docs/*
+!README.md

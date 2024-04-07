@@ -12,3 +12,11 @@ module "ec2" {
   public_sg_id            = module.vpc.public_sg_id
   private_sg_id           = module.vpc.private_sg_id
 }
+
+module "route53" {
+  source      = "./modules/route53"
+  vpc_id      = module.vpc.vpc_id
+  root_dns    = var.root_dns
+  app_dns     = var.app_dns
+  app_alb_dns = module.ec2.app_alb_dns
+}

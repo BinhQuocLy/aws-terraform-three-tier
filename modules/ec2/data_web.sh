@@ -1,27 +1,38 @@
 #!/bin/bash
 yum update -y && yum upgrade -y
 
-# Install httpd
-yum install -y httpd
-systemctl start httpd
-systemctl enable httpd
+# Install node.js 20
+yum install -y nodejs20
+ln -s -f /usr/bin/node-20 /usr/bin/node
+ln -s -f /usr/bin/npm-20 /usr/bin/npm
 
-# Write a simple web page
-cat <<EOF >> /var/www/html/index.html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Web IP (This page): $(hostname -I)</h1>
-  <h1 id="app">App IP: </h1>
-  <script>
-    const appContent = document.getElementById("app");
-    appContent.innerText += "$(hostname -I)";
-  </script>
-</body>
-</html>
+# ======================================
+# Write a simple web
+# (For the simplified solution for CORS problem in the browser, I made a Node.JS webserver api for the Web-tier instead, then call the App-tier api for the simulation).
+# ======================================
+mkdir ~/web
+cd ~/web
+
+npm init -y
+npm install express axios
+
+cat <<EOF >> index.js
+const express = require('express');
+const axios = require('axios');
+
+const app = express();
+const port = 80;
+
+app.get('/', async (req, res) => {
+  const app_res = await axios.get('http://app.test.com');
+  res.json({ 
+    web_private_ip: "$(hostname -I)".trim(), 
+    app_private_ip: app_res.data.ip 
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
 EOF
+node index.js
