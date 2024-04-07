@@ -1,5 +1,7 @@
 # AWS-Terraform Use Case 2
 
+A highly available three-tier architecture with AWS.
+
 ![diagram2](docs/diagram2.png)
 
 ## Definition of Done
